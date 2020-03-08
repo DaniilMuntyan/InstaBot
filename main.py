@@ -39,9 +39,8 @@ def signIn(driver, email, password):
 
 
 def scroll_down(driver):
-    #driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
     last_height = driver.execute_script("return document.body.scrollHeight")
-    list = []
+    my_list = []
     wait = WebDriverWait(driver, 1)
     while True:
         p = 0
@@ -53,8 +52,8 @@ def scroll_down(driver):
                     s = '//div[@class=" _2z6nI"]/article[@class="ySN3v"]/div/div/div[%d]/div[%d]/a' % (i, j)
                     link = wait.until(EC.presence_of_element_located((By.XPATH, s)))
                     a = link.get_attribute('href')
-                    if a not in list:
-                        list.append(a)
+                    if a not in my_list:
+                        my_list.append(a)
                 except (NoSuchElementException, TimeoutException):
                     p = 1
                     # print(str(i) + ' ' + str(j))
@@ -67,25 +66,20 @@ def scroll_down(driver):
             break
         last_height = new_height
     driver.execute_script("window.scrollTo(0, 0);")
-    return list
+    return my_list
 
 
 # begin = "https://www.instagram.com/moonchan_daniil/"
 # begin = "https://www.instagram.com/tatyanamuntyan/?hl=ru"
 # begin = "https://www.instagram.com/tayinitskaya/"
-'''k = ['https://www.instagram.com/tatyanamuntyan/?hl=ru', 'https://www.instagram.com/mistake.away/?igshid=16iazcjlk44ma',
+'''k = ['https://www.instagram.com/tatyanamuntyan/?hl=ru', 
+'https://www.instagram.com/mistake.away/?igshid=16iazcjlk44ma',
      'https://www.instagram.com/svetlana_tyshchenko/', 'https://www.instagram.com/bmiraw/']'''
 '''k = ['https://www.instagram.com/serejikfeshchenko/',
      'https://www.instagram.com/krs.kl/', 'https://www.instagram.com/oleksii_stetsyk/',
      'https://www.instagram.com/_tommy__vercetti/']'''
 
-k = ['https://www.instagram.com/mistake.away/?igshid=16iazcjlk44ma',
-     'https://www.instagram.com/mistake.away/?igshid=16iazcjlk44ma',
-     'https://www.instagram.com/mistake.away/?igshid=16iazcjlk44ma',
-     'https://www.instagram.com/mistake.away/?igshid=16iazcjlk44ma',
-     'https://www.instagram.com/mistake.away/?igshid=16iazcjlk44ma',
-     'https://www.instagram.com/mistake.away/?igshid=16iazcjlk44ma',
-     'https://www.instagram.com/mistake.away/?igshid=16iazcjlk44ma']
+k = ['https://www.instagram.com/oleksii_stetsyk/', 'https://www.instagram.com/moonchan_daniil/']
 
 start_time = time.time()
 # webdriver_service = service.Service('D:\chromedriver_win32\chromedriver')
@@ -109,7 +103,7 @@ for i in range(len(k)):
     ws.title = 'Locations'
     wait = WebDriverWait(driver, 7)
     wait.until(EC.presence_of_element_located((By.CLASS_NAME, 'XjzKX')))
-    list = []
+    my_list = []
 
     w = driver.find_element_by_class_name('g47SY ').text
 
@@ -127,14 +121,15 @@ for i in range(len(k)):
 
         c = 2
 
-        driver.get(begin)
+        # driver.get(begin)
         wait.until(EC.presence_of_element_located((By.CLASS_NAME, 'XjzKX')))
-        list = scroll_down(driver)
+        while len(my_list) is not int(w):
+            my_list = scroll_down(driver)  # список ссылок на посты
 
-        print(len(list))
+        print(len(my_list))
         data_style = NamedStyle(name='data_style', number_format='dd.mm.yyyy')
-        for i in range(0, len(list)):
-            driver.get(list[i])
+        for i in range(0, len(my_list)):
+            driver.get(my_list[i])
             flag = False
             t = WebDriverWait(driver, 7)
             curr = t.until(EC.presence_of_element_located((By.CLASS_NAME, 'JF9hh')))
@@ -175,12 +170,12 @@ for i in range(len(k)):
             c += 1
 
         font = Font(name='Times New Roman', size=16, bold=True)
-        for j in range(1, len(list)):
+        for j in range(1, len(my_list)):
             ws.cell(row=1, column=j).font = font
             ws.cell(row=1, column=j).alignment = Alignment(horizontal='center', vertical='center')
 
         font = Font(name='Times New Roman', size=14)
-        for i in range(2, len(list) + 2):
+        for i in range(2, len(my_list) + 2):
             for j in range(1, 9):
                 if j == 3:
                     ws.cell(row=i, column=j).font = Font(name='Times New Roman', color='0000FF',
