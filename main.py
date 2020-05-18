@@ -69,32 +69,17 @@ def scroll_down(driver):
     return my_list
 
 
-# begin = "https://www.instagram.com/moonchan_daniil/"
-# begin = "https://www.instagram.com/tatyanamuntyan/?hl=ru"
-# begin = "https://www.instagram.com/tayinitskaya/"
-'''k = ['https://www.instagram.com/tatyanamuntyan/?hl=ru', 
-'https://www.instagram.com/mistake.away/?igshid=16iazcjlk44ma',
-     'https://www.instagram.com/svetlana_tyshchenko/', 'https://www.instagram.com/bmiraw/']'''
-'''k = ['https://www.instagram.com/serejikfeshchenko/',
-     'https://www.instagram.com/krs.kl/', 'https://www.instagram.com/oleksii_stetsyk/',
-     'https://www.instagram.com/_tommy__vercetti/']'''
-
-k = ['https://www.instagram.com/oleksii_stetsyk/', 'https://www.instagram.com/moonchan_daniil/']
+k = ['https://www.instagram.com/moonchan_daniil/']
 
 start_time = time.time()
-# webdriver_service = service.Service('D:\chromedriver_win32\chromedriver')
-'''webdriver_service = service.Service('D:\Python\Парсинг\Insta_bot\operadriver')
-webdriver_service.start()
-driver = webdriver.Remote(webdriver_service.service_url, webdriver.DesiredCapabilities.OPERA)'''
 
 # Turn VPN on
 opera_profile = r'C:\Users\Админ\AppData\Roaming\Opera Software\Opera Stable'
 options = webdriver.ChromeOptions()
 options.add_argument('user-data-dir=' + opera_profile)
 options._binary_location = r'C:\Program Files (x86)\Opera\66.0.3515.72\opera.exe'
-driver = webdriver.Opera(executable_path=r'D:\Python\Парсинг\Insta_bot\operadriver.exe', options=options)
+driver = webdriver.Opera(executable_path=r'path\operadriver.exe', options=options)
 
-# driver = signIn(driver, 'daniilmuntjan@gmail.com', '123456781')
 for i in range(len(k)):
     begin = k[i]
     driver.get(begin)
